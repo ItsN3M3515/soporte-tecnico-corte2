@@ -1,0 +1,296 @@
+# AsisTec · Soporte técnico en aulas — Corte 2
+
+**Del reto a la arquitectura: selección del estilo arquitectónico y validación mediante pruebas**
+Diseño y Arquitectura de Software (DYAS) · Universidad de La Sabana
+
+| Integrante |
+|---|
+| María José Almanza Caviedes |
+| Pablo Andrés Tamayo González |
+| Amy Jeanine Nossa Ramírez |
+| Simón Martínez García |
+
+---
+
+## El problema (en una línea)
+
+Cada salón tiene un teléfono para pedir soporte, pero muchas llamadas no se contestan, nadie sabe si alguien va en camino y los edificios sin "carrito" quedan sin cobertura. Nuestro sistema reemplaza la llamada por **un QR en cada equipo**: el docente lo escanea, la solicitud se asigna al técnico más cercano de su sede, y todos ven el avance **en tiempo real**.
+
+## Arquitectura que usamos
+
+**Hexagonal (puertos y adaptadores)** en el backend (Node.js), con la **app Expo como cliente** (cliente-servidor sobre HTTP + WebSocket). La app es nuestro prototipo de Figma **AsisTec** hecho funcionar: las 18 pantallas del prototipo están conectadas a casos de uso reales.
+
+```
+   App AsisTec (Expo, diseño de Figma)                 Programador (cada 30 s)
+   docente · técnico · coordinador                     agenda + escalación
+                 │ HTTP + JWT        ▲ WebSocket                  │
+   ┌─────────────▼───────────────────┴─────────────────────────────▼──────────┐
+   │ ADAPTADORES DE ENTRADA   Express · Socket.IO · ProgramadorEscalacion     │
+   │   ┌──────────────────────────────────────────────────────────────────┐   │
+   │   │ APLICACIÓN   CrearSolicitud · AtenderSolicitud · Consultas ·     │   │
+   │   │   AsignarManualmente · ActivarProgramadas · EscalarVencidas ·    │   │
+   │   │   Autenticar · NotificacionesDocente (Decorator del publicador)  │   │
+   │   │   ┌──────────────────────────────────────────────────────────┐   │   │
+   │   │   │ DOMINIO  CodigoQR · Solicitud · Tecnico (State) ·        │   │   │
+   │   │   │ ColaPrioridad (Strategy) · Búsqueda (Decorator) ·        │   │   │
+   │   │   │ Escalación (Chain) · FabricaSolicitudes (Factory Method) │   │   │
+   │   │   └──────────────────────────────────────────────────────────┘   │   │
+   │   └──────────────── PUERTOS (contratos) ─────────────────────────────┘   │
+   │ ADAPTADORES DE SALIDA   SQLite · Publicador Socket.IO · JWT · Reloj      │
+   └──────────────────────────────────────────────────────────────────────────┘
+```
+
+**Por qué hexagonal:** comparamos capas, hexagonal, microservicios y event-driven con criterios sacados de los retos (matriz en el [ADR-001](docs/adr/ADR-001-estilo-hexagonal.md)). Hexagonal ganó porque deja probar las reglas sin base de datos ni red, permite varias entradas (app, QR, temporizador) sobre las mismas reglas, y deja cambiar el canal de tiempo real o la base de datos sin tocar el dominio. Microservicios se descartó por desproporcionado para 2 sedes y 4 técnicos. **Qué sacrificamos:** más archivos e indirección, y un solo proceso (el límite se midió en la prueba de estrés). La regla de dependencia (el dominio no importa nada de afuera) **la verifica una prueba automática y el escaneo de código**.
+
+Lo comprobamos al conectar el prototipo: los cinco servicios de la pantalla "Servicios" entraron como cinco creadores de la `FabricaSolicitudes`, y las notificaciones como un decorador del puerto de eventos. Los casos de uso del Corte 2 y los patrones del Corte 1 casi no cambiaron.
+
+Documento completo con los diagramas C4 y la tabla pantalla del prototipo → caso de uso: [docs/arquitectura.md](docs/arquitectura.md).
+
+## Pruebas que implementamos
+
+| Tipo | Cantidad | Qué demuestran | Herramienta | Comando (en `backend/`) | Resultado |
+|---|---|---|---|---|---|
+| **Unitarias** | 208 | Reglas de negocio aisladas, sin BD ni red: formato del QR, reglas de cada servicio (préstamo, agenda, mantenimiento, evento, falla eléctrica), estados del técnico, prioridad con envejecimiento, búsqueda por sede, escalación por tiempo, avisos del docente, quién puede ver cada solicitud. Patrón AAA, clases de equivalencia, valores límite y dobles de prueba | Jest | `npm run test:unit` | ✅ 208/208 · cobertura del núcleo **98,5 %** líneas |
+| **Integración** | 69 | Las fronteras del hexágono con infraestructura real: **imagen del QR → lector → API**, API → casos de uso → SQLite, eventos Socket.IO entre servidor y clientes reales, y los flujos de cada pantalla del prototipo | Jest + Supertest + jsQR + socket.io-client | `npm run test:integration` | ✅ 69/69 |
+| **Sistema (caja negra)** | 1 | Una mañana completa, solo por HTTP: escanear → asignar → cola → atender → siguiente más urgente → panel admin | Jest + Supertest | incluida en integración | ✅ |
+| **De punta a punta en la app (navegador)** | 7 | La app web real en Chromium: **cambiar de usuario** entre las 4 cuentas (docente, estudiante, técnico, coordinador) y comprobar a qué pantalla llega cada una y qué le prohíbe la API; **la cámara del navegador lee un QR** (cámara falsa que muestra el QR impreso) y se elige qué le pasa al equipo, una **estudiante** sube la foto de un QR y reserva, un QR de otro sistema se rechaza, y el técnico ve aparecer la solicitud sin recargar mientras la docente ve "Técnico en camino". Usa Page Object Model | Playwright | `cd e2e && npm test` | ✅ 7/7 (≈13 s) · capturas adjuntas en `e2e/reporte/` |
+| **Carga** | 3 escenarios | Baseline, pico de inicio de clases y estrés, con SLO definido antes (p95 ≤ 500 ms al crear) | k6 | `bash perf/correr.sh pico` (desde la raíz) · en Windows: `k6 run perf/scripts/pico.js` con el backend prendido | ✅ baseline y pico cumplen (p95 ≤ 9 ms; en el portátil del equipo ≤ 156 ms) · estrés: quiebre a ≈140 sol/s |
+| **Escaneo de código** | 57 archivos | Análisis estático, reglas de seguridad (ReDoS, inyección por prototipo), calidad de las pruebas, regla hexagonal y vulnerabilidades en dependencias | ESLint + eslint-plugin-security + eslint-plugin-jest + npm audit | `npm run escaneo` | ✅ 0 hallazgos (29 en el primer escaneo, 2 eran defectos reales y se corrigieron con prueba) |
+
+**Dónde ver cada prueba:**
+
+- **`npm run retos`** (en `backend/`): corre todo y muestra en la terminal una lista de chequeo con los 5 retos y cada prueba que los demuestra con ✓. Es lo más rápido para mostrar en la sustentación.
+- **[Evidencia por reto](docs/evidencias/evidencia-por-reto.md)**: para cada reto (QR, tiempo real, multisede, pantallas del prototipo…), el código de la prueba que lo demuestra y su resultado, incluidas las pruebas en el navegador. Se regenera con `npm run evidencia`.
+- [Reporte HTML de las 278 pruebas](docs/evidencias/reporte-pruebas.html): ábranlo en el navegador; se regenera con `npm run test:reporte`.
+- [Escaneo de código](docs/evidencias/escaneo-codigo.md): hallazgos antes y después, qué se corrigió y por qué.
+- [Estrategia y análisis de carga](docs/pruebas.md).
+
+### Ejecución en un computador del equipo (Windows, 26/09/2026)
+
+Además de correrlas mientras las desarrollábamos, corrimos todo desde cero en un portátil con Windows, siguiendo las instrucciones de este README. Estas son las capturas de la terminal:
+
+| Qué | Comando | Resultado | Captura |
+|---|---|---|---|
+| Lista de chequeo por reto (unitarias + integración + sistema) | `cd backend` → `npm run retos` | ✅ 278 de 278 pasan, "Todos los retos quedan demostrados" | [01](docs/evidencias/windows/01-retos-278-de-278.png) |
+| Pruebas de punta a punta en el navegador | `cd e2e` → `npm test` | ✅ 7 passed | [02](docs/evidencias/windows/02-navegador-7-passed.png) · [reporte](docs/evidencias/windows/03-reporte-playwright.png) |
+| Carga: baseline | `k6 run perf/scripts/baseline.js` | ✅ p95 crear 156 ms · p95 cola 25 ms · 0 % errores (790 peticiones) | [04](docs/evidencias/windows/04-k6-baseline.png) |
+| Carga: pico de inicio de clases | `k6 run perf/scripts/pico.js` | ✅ p95 crear 58 ms · p95 cola 50 ms · 0 % errores (4.616 peticiones, 50 req/s) | [05](docs/evidencias/windows/05-k6-pico.png) |
+| Escaneo de código | `cd backend` → `npm run escaneo` | ✅ ESLint sin hallazgos, reporte generado | [06](docs/evidencias/windows/06-escaneo-codigo.png) |
+| Prueba manual con Expo Go | celular escanea el QR del PC de Ad Portas | ✅ el técnico (Miguel) recibe "Sin internet" con la descripción escrita | [07](docs/evidencias/windows/07-tecnico-recibe-el-problema.png) |
+
+Los tiempos de carga en el portátil son más altos que en la medición de `perf/` (4,8 y 8,9 ms) porque ahí corrían a la vez el servidor, k6, VS Code y Expo, y la base ya tenía datos. Aun así cumplen el SLO (≤ 500 ms crear, ≤ 300 ms cola, < 1 % errores) con mucho margen.
+
+| Lista de chequeo (`npm run retos`) | Navegador: 7 passed | Reporte de Playwright |
+|---|---|---|
+| ![](docs/evidencias/windows/01-retos-278-de-278.png) | ![](docs/evidencias/windows/02-navegador-7-passed.png) | ![](docs/evidencias/windows/03-reporte-playwright.png) |
+
+| k6 baseline | k6 pico | Escaneo de código |
+|---|---|---|
+| ![](docs/evidencias/windows/04-k6-baseline.png) | ![](docs/evidencias/windows/05-k6-pico.png) | ![](docs/evidencias/windows/06-escaneo-codigo.png) |
+
+### Ejemplo: la prueba del reto "escanear el QR"
+
+No escribimos el texto del QR a mano. La prueba toma la **imagen PNG que se imprime y se pega en el equipo**, la **lee con un decodificador de QR** (lo mismo que hace la cámara) y envía lo leído a la API ([`escaneoQR.int.test.js`](backend/tests/integration/escaneoQR.int.test.js)):
+
+```js
+test('escanear el QR impreso del video beam del salón 101 (Edificio K) crea la solicitud y la asigna a Laura', async () => {
+  // Arrange: la imagen que está pegada en el equipo
+  const png = impreso('CAM-K-101-VB01');
+
+  // Act: la "cámara" lee el QR, la app muestra qué le puede pasar a ESE equipo, la docente elige y envía
+  const leido = escanear(png);
+  const equipo = (await e.como('docente').get(`/api/qr/resolver?qr=${encodeURIComponent(leido)}`)).body;
+  const res = await e.como('docente').post('/api/solicitudes', {
+    qr: leido,
+    tipo: 'FALLA_EQUIPO_FIJO',
+    claseEnCurso: true,
+    datos: { problema: 'SIN_IMAGEN', descripcion: 'Enciende pero la pantalla queda en azul' },
+  });
+
+  // Assert
+  expect(leido).toBe('SOPORTE:v1:CAM-K-101-VB01');
+  expect(equipo.problemas.map((p) => p.texto)).toContain('No proyecta imagen');
+  expect(res.status).toBe(201);
+  expect(res.body).toMatchObject({ codigoEquipo: 'CAM-K-101-VB01', salon: '101', edificio: 'Edificio K', sede: 'CAMPUS', estado: 'ASIGNADA', tecnicoNombre: 'Laura Martínez' });
+  expect(res.body.detalle).toBe('No proyecta imagen: Enciende pero la pantalla queda en azul'); // lo que lee el técnico
+});
+```
+
+Después de escanear, la app pregunta **qué le pasa al equipo**. Las opciones las manda el backend según el tipo de equipo: un video beam "no proyecta imagen" o "no detecta el computador (HDMI)"; un PC "sin internet" o "muy lento". También se puede elegir "Otro problema" y describirlo. Así el técnico llega sabiendo qué revisar. El mismo archivo prueba que las opciones cambian según el equipo, que un problema que no es de ese equipo o un "Otro" sin describir se rechazan, que **los 61 QR impresos se leen y cada uno apunta a su equipo**, que un QR de otro sistema o de un equipo inexistente se rechaza, y qué pasa con un **sticker rayado**: con el 10 % del centro tapado, un QR impreso con corrección de errores H se sigue leyendo y uno con M no (por eso imprimimos en H). Medido sobre los 61 QR, con ese rayón se leen 59; para los que no, la pantalla de escaneo tiene "Buscar manualmente por edificio y salón", y también tiene su prueba.
+
+Y en la app: la prueba de Playwright [`e2e/pruebas/qr.spec.js`](e2e/pruebas/qr.spec.js) abre la pantalla "Escanear equipo" en Chromium con una cámara falsa que transmite el QR impreso del video beam del Salón 301. La app lo lee con la cámara (jsQR), el backend responde "Salón 301 · Edificio O" y la docente termina el reporte hasta ver "Técnico asignado".
+
+![QR leído por la cámara del navegador](docs/capturas/e2e-01-qr-leido-camara-navegador.png)
+
+## Qué hay en este repositorio
+
+```
+README.md                  ← este archivo: cómo ejecutar + tabla de trazabilidad
+docs/
+  arquitectura.md          ← documento de arquitectura (estilos, C4, Corte 1 vs Corte 2, límites)
+  adr/                     ← decisiones: 001 estilo · 002 concurrencia · 003 tiempo real · 004 cola · 005 avisos · 006 agenda
+  pruebas.md               ← estrategia y resultados de las pruebas (unitarias, integración, carga)
+  evidencias/              ← evidencia por reto, reporte HTML de pruebas, escaneo de código, cobertura y windows/ (capturas de la ejecución en Windows)
+  capturas/                ← pantallazos de la app funcionando (uno por pantalla del prototipo)
+  qr/                      ← 61 códigos QR de demostración; imprimir.html los junta en hojas para imprimir
+backend/                   ← API Node.js en arquitectura hexagonal
+  src/domain/              ←   reglas de negocio (sin dependencias externas)
+  src/application/         ←   casos de uso
+  src/ports/               ←   contratos con el exterior
+  src/adapters/            ←   Express, Socket.IO, SQLite, JWT, temporizador
+  src/config/              ←   raíz de composición y datos de demostración
+  tests/unit/              ←   208 pruebas unitarias
+  tests/integration/       ←   70 pruebas de integración (incluye escaneo de QR con imágenes reales) y de sistema
+  eslint.config.js         ←   reglas del escaneo de código
+app/                       ← app Expo AsisTec: las pantallas del prototipo de Figma (docente/estudiante, técnico, coordinador)
+e2e/                       ← pruebas de punta a punta en el navegador (Playwright): QR con cámara, estudiante, tiempo real
+perf/                      ← scripts k6, resultados y análisis de carga
+corte1-java/               ← código del Corte 1, como referencia de la arquitectura inicial
+```
+
+## Cómo ejecutar (desde cero)
+
+Requisitos: **Node.js 22.13 o superior** (probado con 22 y 24; el backend usa el SQLite que ya trae Node, así que no hay que compilar nada). Para la app en el celular, la app **Expo Go** (compatible con SDK 57). Para carga, **k6**.
+
+### 1. Backend
+
+```bash
+cd backend
+npm install
+npm start            # API en http://localhost:3000/api  (crea data/soporte.db con datos de demostración)
+```
+
+Variables opcionales (ver `backend/.env.example`): `PORT`, `DB_PATH`, `JWT_SECRET`, `MINUTOS_SIN_RESPUESTA` (5), `MINUTOS_EN_COLA` (10), `INTERVALO_ESCALACION_MS` (30000).
+
+Si ya tenían una base de datos de la versión anterior (`backend/data/soporte.db`), el backend la detecta por la versión del esquema, la vuelve a crear y recarga los datos de demostración.
+
+### 2. App (Expo)
+
+```bash
+cd app
+npm install
+npx expo start       # tecla "w" abre la versión web; o escanear el QR de la terminal con Expo Go
+```
+
+- **En el navegador** funciona directo contra `localhost:3000`.
+- **En el celular** (misma red Wi-Fi que el computador): la app detecta sola la IP del computador que corre Expo. Si no conecta, en la pantalla de inicio de sesión toque **"Servidor: …"** y escriba `http://<IP-del-computador>:3000`. En Windows, puede que haya que permitir Node.js en el firewall.
+- **Leer un QR** (pantalla "Escanear equipo"), de cualquiera de estas formas:
+  1. **Celular con Expo Go:** abrir `docs/qr/imprimir.html` en el computador (o imprimirlo) y apuntar la cámara del celular a un QR.
+  2. **Navegador del computador con cámara:** el navegador pide permiso a la cámara; se muestra el QR impreso (o en la pantalla del celular) frente a la cámara.
+  3. **Sin cámara:** botón **"Subir foto del QR"** y elegir un PNG de `docs/qr/`.
+  4. **QR dañado:** "Buscar manualmente por edificio y salón".
+
+**Usuarios de demostración**
+
+| Rol | Usuario | Clave | Pantalla |
+|---|---|---|---|
+| Docente (sede CAMPUS) — "Amy Jeanine" | `docente` | `docente123` | Inicio, servicios, escanear, préstamo, seguimiento, notificaciones |
+| Docente (sede NORTE) | `docente.norte` | `docente123` | ídem |
+| Estudiante (sede CAMPUS) — "Valentina Rojas" | `estudiante` | `estudiante123` | Las mismas que el docente: los estudiantes también reservan y reportan |
+| Técnico | `laura`, `miguel`, `sofia` (CAMPUS) · `andres` (NORTE) | `tecnico123` | 5 - Vista del técnico |
+| Coordinador | `admin` | `admin123` | 6 - Panel del coordinador |
+
+En la pantalla de inicio de sesión hay cuatro botones de "Cuentas de prueba" que entran directo. **Para probar los permisos, cambien de usuario:** docente y estudiante cierran sesión en *Perfil → Cerrar sesión*; técnico y coordinador, con la flecha de arriba a la izquierda. Cada cuenta llega a su propia pantalla, y lo que no le toca el backend lo rechaza con 403 aunque se llame directo a la API.
+
+**Demo sugerida (3 pestañas del navegador o dispositivos):** entrar como `laura` (Técnico), `admin` (Coordinador) y `docente`. La docente reporta la falla del video beam del Salón 301 del Edificio O (búsqueda manual o QR `CAM-O-301-VB01`); Laura la ve aparecer sin recargar, la acepta, y el seguimiento de la docente pasa a "Técnico en camino" y le llega la notificación.
+
+### 3. Pruebas
+
+```bash
+cd backend
+npm test                    # 278 pruebas (unitarias + integración + sistema)
+npm run retos               # lista de chequeo: cada reto con las pruebas que lo demuestran
+npm run test:unit           # solo unitarias (~1 s)
+npm run test:integration    # solo integración y sistema
+npm run test:coverage       # con cobertura; falla si baja del umbral
+npm run test:reporte        # genera docs/evidencias/reporte-pruebas.html
+npm run evidencia           # regenera docs/evidencias/resultados-pruebas.md y evidencia-por-reto.md
+npm run escaneo             # escaneo de código (ESLint + seguridad + npm audit)
+```
+
+```bash
+# carga (desde la raíz; requiere k6)
+bash perf/correr.sh baseline
+bash perf/correr.sh pico
+bash perf/correr.sh estres
+```
+
+```bash
+# de punta a punta en el navegador (Playwright). La primera vez: npm install y npm run preparar
+cd e2e
+npm install
+npm run preparar            # compila la app web y descarga Chromium
+npm test                    # levanta backend y app solos, corre las 7 pruebas
+npm run reporte             # abre el reporte HTML con las capturas de cada paso
+```
+
+### 4. Códigos QR
+
+```bash
+cd backend && npm run qr    # regenera docs/qr/*.png y docs/qr/imprimir.html (hoja para imprimir)
+```
+
+---
+
+## Tabla de trazabilidad de retos
+
+Cada fila se puede seguir de punta a punta: reto → atributo de calidad → decisión → dónde está en el repo → prueba → resultado.
+
+| Reto (Corte 1) | Atributo de calidad | Decisión arquitectónica | Dónde está (repo) | Prueba que lo evidencia | Resultado |
+|---|---|---|---|---|---|
+| **Reservar mediante QR** | Usabilidad · Disponibilidad | Adaptador de entrada: pantalla "3a - Escanear QR" (`expo-camera` en el celular; cámara del navegador + jsQR o foto subida en la web) sobre el caso de uso `CrearSolicitud`. **Factory Method** `FabricaSolicitudes` con reglas propias por servicio. Después de escanear se elige **qué le pasa** al equipo (opciones según el tipo de equipo, `problemasEquipo.js`) y si hay clase en curso. Docentes y estudiantes pueden reservar. Si el QR no se lee: búsqueda manual por edificio y salón | `app/src/app/escanear.tsx` · `app/src/app/falla.tsx` · `app/src/ui/EscanerWeb.web.tsx` · `backend/src/domain/modelo/problemasEquipo.js` · `backend/src/application/CrearSolicitud.js` · `backend/src/domain/modelo/FabricaSolicitudes.js` | **Integración con imagen real** `escaneoQR.int.test.js`: se lee el PNG impreso, se elige qué le pasa y se crea la solicitud (falla y préstamo); las opciones dependen del equipo; un problema que no aplica → 400 · `prototipo.int.test.js`: ubicaciones → equipos del salón → solicitud · Unitarias `FabricaSolicitudes.test.js` y `ServiciosPrototipo.test.js` · `prototipo.int.test.js`: una **estudiante** reserva un PC por QR · Sistema `flujoSistema.e2e.test.js` · **Navegador (Playwright)** `e2e/pruebas/qr.spec.js`: la cámara lee el QR, se elige "No proyecta imagen" y se reporta; una estudiante sube la foto del QR y reserva | ✅ Solicitud creada en 1 petición, **p95 = 4,8 ms** en baseline y **8,9 ms** en el pico (SLO ≤ 500 ms) |
+| **QR asociado al PC** | Integridad · Seguridad | El QR lleva **solo** el código del equipo (`SOPORTE:v1:<código>`), validado por el objeto de valor `CodigoQR`. La ubicación (salón, edificio, sede) se resuelve en el servidor desde la tabla `equipos`. Se imprime con corrección de errores **H** | `backend/src/domain/modelo/CodigoQR.js` · `backend/src/config/imagenQR.js` · `backend/src/adapters/out/persistence/sqlite/baseDatos.js` | **`escaneoQR.int.test.js`: los 61 PNG impresos se leen y cada uno resuelve a su equipo; QR manipulado → 400; equipo inexistente → 404; sticker rayado 10 %: se lee con H, no con M; medido en los 61: se leen ≥ 95 %** · Unitarias `CodigoQR.test.js`: clases de equivalencia + longitudes límite 4/5/40/41 · **Navegador:** un QR de otro sistema se lee pero la app lo rechaza | ✅ 61/61 QR impresos leídos y asociados a su equipo. Con el 10 % rayado se leen 59/61 (los otros 2 → búsqueda manual) |
+| **Enfoque administrativo** | Seguridad · Mantenibilidad | Cuatro roles en JWT (DOCENTE, ESTUDIANTE, TECNICO, ADMIN) validados en el **adaptador** HTTP. Pantalla "6 - Panel del coordinador": `Consultas.resumenHoy()` (escaladas hoy, resueltas hoy, tiempo promedio, día de Bogotá), `Consultas.escaladas()` con el motivo, y el caso de uso `AsignarManualmente` | `backend/src/adapters/in/http/app.js` · `backend/src/application/Consultas.js` · `backend/src/application/AsignarManualmente.js` · `app/src/app/coordinador.tsx` | Integración `api.int.test.js` › seguridad y roles (401/403) · una estudiante no entra al panel ni acepta como técnico (403) · cada cuenta ve solo el detalle de SUS solicitudes (la docente no abre la de la estudiante: 403) · **Navegador (Playwright)** `cuentas.spec.js`: se cambia de usuario entre las 4 cuentas y cada una llega a su pantalla; directo a la API, cada cuenta recibe 403 en lo que no le toca · `prototipo.int.test.js` › pantalla 6 (escalada con motivo → asignar a mano → tarjetas del día) · Unitaria "«hoy» es el día en Bogotá" (23:50 cuenta, 00:10 del día siguiente no) | ✅ Accesos indebidos bloqueados; el coordinador resuelve una escalada desde la app |
+| **Reporte en tiempo real** | Rendimiento · Usabilidad | Eventos de dominio publicados por el puerto `PublicadorEventos` **después** de confirmar la transacción. Adaptador Socket.IO con salas `admin`, `sede:X`, `tecnico:Y` y `usuario:Z` (ADR-003). **Decorator** `NotificacionesDocente` guarda los avisos del docente (ADR-005) | `backend/src/ports/puertos.js` · `backend/src/application/NotificacionesDocente.js` · `backend/src/adapters/in/realtime/servidorSockets.js` · `app/src/lib/tiempoReal.tsx` | Integración `tiempoReal.int.test.js` (servidor y clientes reales) · `prototipo.int.test.js`: cuando Laura acepta, al socket de la docente le llegan el cambio y el aviso "Laura va en camino a Salón 101" · Unitarias del decorador (un fallo al guardar el aviso no tumba la solicitud) · **Navegador (Playwright)** `tiempo-real.spec.js`: dos pestañas; el técnico del Norte ve la solicitud sin recargar | ✅ Eventos entregados a quien corresponde; pantallas 1, 4, 5, 6 y 11 se actualizan sin recargar |
+| **Cola de prioridades** | Rendimiento · Equidad (sin inanición) | Montículo `ColaPrioridad` + **Strategy** `PoliticaImpactoYEspera` (impacto por tipo + 2 pts/min, tope 60 min). Lo agendado entra a la cola 30 min antes (`ActivarProgramadas`, ADR-006). Consulta paginada (ADR-004) | `backend/src/domain/prioridad/` · `backend/src/application/ActivarProgramadas.js` · `backend/src/domain/asignacion/GestorAsignaciones.js` | Unitarias `Prioridad.test.js` (límites de aging 0/1/59/60/61/600 min) · orden de los 5 servicios · agenda 29 ✗ / 30 ✓ min · Sistema: la urgente se atiende antes que el préstamo más antiguo · **k6 pico:** 30 sol/s, 1 min | ✅ Sin inanición. **Pico: p95 cola = 8,3 ms** (SLO ≤ 300 ms), 0 % errores. ⚠️ Estrés: quiebre a ≈140 sol/s (ver límites) |
+| **Multisede (distribución y demanda)** | Escalabilidad · Disponibilidad | La asignación automática se restringe a la sede. **Decorator** doble: edificio → cercanos → cualquiera de la sede. El panel calcula por sede la cola, los técnicos libres y el **déficit**; si una sede se satura, el coordinador puede mandar un técnico de otra sede ("Asignar manualmente") | `backend/src/domain/busqueda/busqueda.js` · `backend/src/application/Consultas.js` · `backend/src/application/AsignarManualmente.js` | Unitaria "NUNCA asigna un técnico de otra sede" · Integración: sede NORTE saturada no toma técnicos del CAMPUS; déficit por sede · Unitaria: el coordinador manda a Andrés (NORTE) a una escalada del CAMPUS y se avisa a ambas sedes · Tiempo real: el técnico del NORTE no recibe eventos del CAMPUS | ✅ Aislamiento automático por sede y redistribución manual comprobados |
+| **Implementar pruebas** | Confiabilidad · Testabilidad | Estilo hexagonal: el núcleo no depende de infraestructura (regla verificada por prueba). Reloj inyectable. Composición única reutilizada por las pruebas de integración. Evidencia generada desde una sola ejecución (`npm run evidencia`) | `backend/tests/` · `backend/tests/unit/arquitectura.test.js` · `backend/src/config/contenedor.js` · `perf/` | `npm test` · `npm run test:coverage` · `npm run escaneo` · `bash perf/correr.sh …` | ✅ **278/278 pasan** + 7/7 en el navegador. Cobertura del núcleo solo con unitarias: **98,6 % líneas, 91,2 % ramas**. Escaneo: 0 hallazgos |
+| **Pantalla del trabajador** | Usabilidad · Consistencia | Pantalla "5 - Vista del técnico" sobre `AtenderSolicitud` y el **State** del Corte 1: solo aparece el botón de la transición válida (aceptar → confirmar llegada → resolver) y "Cancelar" mientras no ha llegado. Escalación automática con **Chain of Responsibility** si no acepta en 5 min | `app/src/app/tecnico.tsx` · `backend/src/application/AtenderSolicitud.js` · `backend/src/domain/tecnicos/estados.js` · `backend/src/adapters/in/scheduler/ProgramadorEscalacion.js` | Unitarias `Tecnico.test.js` (transiciones inválidas) · "Cancelar" pasa la solicitud a otro técnico y nunca al mismo · escala a los 5 min y no a los 4 · Integración "si Laura no acepta en 5 minutos se reasigna" | ✅ Ninguna transición inválida altera el estado; reasignación automática y por cancelación comprobadas |
+| *Prototipo de Figma AsisTec* | Usabilidad · Modificabilidad | La app reproduce las 18 pantallas del prototipo (tokens, tipografía Inter, iconos exportados de Figma). Cada servicio del prototipo es un creador más de la fábrica | `app/src/app/` · `app/src/ui/` · `docs/arquitectura.md` §4.7 | `ServiciosPrototipo.test.js` (32) · `CasosDeUsoPrototipo.test.js` (26) · `prototipo.int.test.js` (17) · recorrido con Playwright que captura cada pantalla sin errores en consola (`app/scripts/capturas.js`) | ✅ Capturas en `docs/capturas/`, una por pantalla |
+| *Restricción del equipo: todo en JS / Expo* | Mantenibilidad del equipo | Backend Node.js y app Expo (SDK 57). Se reescribió el Java del Corte 1 conservando sus patrones | `backend/`, `app/`, `corte1-java/` | `npx tsc --noEmit`, `npx expo export -p web` y `-p android` en `app/` sin errores | ✅ |
+
+### Lo que no se logró resolver por completo
+
+- **Escalabilidad más allá de ≈140 solicitudes/s:** el proceso único de Node recalcula la cola en cada consulta. Paginarla (ADR-004) subió el límite y redujo 97 % los datos transferidos, pero no quita el cuello de botella: bajo estrés sigue habiendo timeouts. Para varias instancias hace falta PostgreSQL en vez de SQLite ([pruebas.md §4.4](docs/pruebas.md#44-análisis-del-cuello-de-botella)). Al conectar el prototipo, la prueba de estrés detectó una regresión (≈97 sol/s) que corregimos ([§4.5](docs/pruebas.md#45-una-regresión-que-encontró-la-prueba-de-carga)).
+- **Notificaciones con la app cerrada:** los avisos quedan guardados y llegan en vivo con la app abierta, pero no hay notificaciones push.
+- **Campos del prototipo que cambiamos:** "Edificio y salón" era texto libre y en la app se elige de una lista (para no aceptar salones que no existen); la hora del calendario se elige entre bloques fijos.
+- **Datos y pesos de demostración:** las sedes, edificios, técnicos, pesos de prioridad y mapa de cercanía los definió el equipo, no el área de soporte real.
+- **Pruebas de UI:** se hicieron con Playwright (7 flujos clave), no con Cypress/Selenium, y no cubren todas las pantallas. **UX (SUS):** no se hizo.
+
+Detalle en [docs/arquitectura.md §7](docs/arquitectura.md#7-límites-conocidos-del-diseño-y-trabajo-pendiente-para-el-corte-3).
+
+---
+
+## Capturas
+
+Una por pantalla del prototipo, tomadas de la app funcionando contra el backend (carpeta [`docs/capturas/`](docs/capturas)).
+
+| 1 - Inicio | 3a - Escanear QR | 4 - Seguimiento | 5 - Técnico | 6 - Coordinador |
+|---|---|---|---|---|
+| ![](docs/capturas/01-inicio.png) | ![](docs/capturas/03a-equipo-detectado.png) | ![](docs/capturas/04-seguimiento-tiempo-real.png) | ![](docs/capturas/05-vista-tecnico.png) | ![](docs/capturas/06-panel-coordinador.png) |
+
+| 3c - Préstamo agendado | Calendario | 8 - Mis solicitudes | 11 - Notificaciones | 9 - Servicios |
+|---|---|---|---|---|
+| ![](docs/capturas/03c-prestamo-agendado.png) | ![](docs/capturas/03c-calendario.png) | ![](docs/capturas/08-mis-solicitudes.png) | ![](docs/capturas/11-notificaciones.png) | ![](docs/capturas/09-servicios.png) |
+
+Tomadas por las pruebas de Playwright (`e2e/`):
+
+| Inicio de sesión | QR leído por la cámara | ¿Qué le pasa? | Seguimiento tras el QR | Estudiante reserva desde QR | QR de otro sistema |
+|---|---|---|---|---|---|
+| ![](docs/capturas/00-inicio-sesion.png) | ![](docs/capturas/e2e-01-qr-leido-camara-navegador.png) | ![](docs/capturas/e2e-10-que-le-pasa-al-equipo.png) | ![](docs/capturas/e2e-02-seguimiento-desde-qr.png) | ![](docs/capturas/e2e-03-estudiante-prestamo-desde-qr.png) | ![](docs/capturas/e2e-04-qr-otro-sistema-rechazado.png) |
+
+Lo que ve el técnico cuando le llega un reporte por QR (sin recargar):
+
+![Técnico ve qué le pasa al equipo](docs/capturas/e2e-11-tecnico-ve-que-le-pasa.png)
+
+Cambio de usuario (`e2e/pruebas/cuentas.spec.js`):
+
+| Docente | Estudiante | Técnico | Coordinador | Dirección del panel sin permiso |
+|---|---|---|---|---|
+| ![](docs/capturas/e2e-05-cuenta-docente.png) | ![](docs/capturas/e2e-06-cuenta-estudiante.png) | ![](docs/capturas/e2e-07-cuenta-tecnico.png) | ![](docs/capturas/e2e-08-cuenta-coordinador.png) | ![](docs/capturas/e2e-09-direccion-panel-sin-permiso.png) |
+
+## Documentación
+
+- [Documento de arquitectura](docs/arquitectura.md)
+- [ADR-001 Estilo hexagonal](docs/adr/ADR-001-estilo-hexagonal.md) · [ADR-002 Bloqueo optimista](docs/adr/ADR-002-concurrencia-bloqueo-optimista.md) · [ADR-003 Tiempo real y cola](docs/adr/ADR-003-tiempo-real-y-cola.md) · [ADR-004 Paginación de la cola](docs/adr/ADR-004-limite-en-consulta-de-cola.md) · [ADR-005 Avisos del docente (Decorator)](docs/adr/ADR-005-notificaciones-decorator.md) · [ADR-006 Solicitudes agendadas](docs/adr/ADR-006-solicitudes-agendadas.md)
+- [Estrategia y resultados de pruebas](docs/pruebas.md) · [Evidencia de ejecución](docs/evidencias/resultados-pruebas.md) · [Plan de carga](perf/README.md)

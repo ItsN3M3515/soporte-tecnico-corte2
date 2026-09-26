@@ -1,0 +1,628 @@
+{
+    "setup_data": {
+        "equipos": [
+            {
+                "codigo": "CAM-AP-101-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Ad Portas",
+                "salon": "101",
+                "sede": "CAMPUS"
+            },
+            {
+                "salon": "101",
+                "sede": "CAMPUS",
+                "codigo": "CAM-AP-101-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Ad Portas"
+            },
+            {
+                "codigo": "CAM-AP-102-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Ad Portas",
+                "salon": "102",
+                "sede": "CAMPUS"
+            },
+            {
+                "codigo": "CAM-AP-102-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Ad Portas",
+                "salon": "102",
+                "sede": "CAMPUS"
+            },
+            {
+                "sede": "CAMPUS",
+                "codigo": "CAM-AP-201-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Ad Portas",
+                "salon": "201"
+            },
+            {
+                "salon": "201",
+                "sede": "CAMPUS",
+                "codigo": "CAM-AP-201-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Ad Portas"
+            },
+            {
+                "sede": "CAMPUS",
+                "codigo": "CAM-AP-202-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Ad Portas",
+                "salon": "202"
+            },
+            {
+                "codigo": "CAM-AP-202-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Ad Portas",
+                "salon": "202",
+                "sede": "CAMPUS"
+            },
+            {
+                "codigo": "CAM-AP-301-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Ad Portas",
+                "salon": "301",
+                "sede": "CAMPUS"
+            },
+            {
+                "salon": "301",
+                "sede": "CAMPUS",
+                "codigo": "CAM-AP-301-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Ad Portas"
+            },
+            {
+                "codigo": "CAM-AP-AUD-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Ad Portas",
+                "salon": "Auditorio",
+                "sede": "CAMPUS"
+            },
+            {
+                "codigo": "CAM-H-101-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio H",
+                "salon": "101",
+                "sede": "CAMPUS"
+            },
+            {
+                "codigo": "CAM-H-101-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio H",
+                "salon": "101",
+                "sede": "CAMPUS"
+            },
+            {
+                "edificio": "Edificio H",
+                "salon": "102",
+                "sede": "CAMPUS",
+                "codigo": "CAM-H-102-PC01",
+                "descripcion": "PC de salón"
+            },
+            {
+                "salon": "102",
+                "sede": "CAMPUS",
+                "codigo": "CAM-H-102-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio H"
+            },
+            {
+                "codigo": "CAM-H-201-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio H",
+                "salon": "201",
+                "sede": "CAMPUS"
+            },
+            {
+                "sede": "CAMPUS",
+                "codigo": "CAM-H-201-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio H",
+                "salon": "201"
+            },
+            {
+                "salon": "202",
+                "sede": "CAMPUS",
+                "codigo": "CAM-H-202-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio H"
+            },
+            {
+                "edificio": "Edificio H",
+                "salon": "202",
+                "sede": "CAMPUS",
+                "codigo": "CAM-H-202-VB01",
+                "descripcion": "Video Beam"
+            },
+            {
+                "descripcion": "PC de salón",
+                "edificio": "Edificio H",
+                "salon": "301",
+                "sede": "CAMPUS",
+                "codigo": "CAM-H-301-PC01"
+            },
+            {
+                "codigo": "CAM-H-301-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio H",
+                "salon": "301",
+                "sede": "CAMPUS"
+            },
+            {
+                "descripcion": "PC de salón",
+                "edificio": "Edificio K",
+                "salon": "101",
+                "sede": "CAMPUS",
+                "codigo": "CAM-K-101-PC01"
+            },
+            {
+                "descripcion": "Video Beam",
+                "edificio": "Edificio K",
+                "salon": "101",
+                "sede": "CAMPUS",
+                "codigo": "CAM-K-101-VB01"
+            },
+            {
+                "salon": "102",
+                "sede": "CAMPUS",
+                "codigo": "CAM-K-102-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio K"
+            },
+            {
+                "codigo": "CAM-K-102-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio K",
+                "salon": "102",
+                "sede": "CAMPUS"
+            },
+            {
+                "salon": "201",
+                "sede": "CAMPUS",
+                "codigo": "CAM-K-201-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio K"
+            },
+            {
+                "edificio": "Edificio K",
+                "salon": "201",
+                "sede": "CAMPUS",
+                "codigo": "CAM-K-201-VB01",
+                "descripcion": "Video Beam"
+            },
+            {
+                "descripcion": "PC de salón",
+                "edificio": "Edificio K",
+                "salon": "202",
+                "sede": "CAMPUS",
+                "codigo": "CAM-K-202-PC01"
+            },
+            {
+                "codigo": "CAM-K-202-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio K",
+                "salon": "202",
+                "sede": "CAMPUS"
+            },
+            {
+                "codigo": "CAM-K-301-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio K",
+                "salon": "301",
+                "sede": "CAMPUS"
+            },
+            {
+                "edificio": "Edificio K",
+                "salon": "301",
+                "sede": "CAMPUS",
+                "codigo": "CAM-K-301-VB01",
+                "descripcion": "Video Beam"
+            },
+            {
+                "descripcion": "PC de salón",
+                "edificio": "Edificio O",
+                "salon": "101",
+                "sede": "CAMPUS",
+                "codigo": "CAM-O-101-PC01"
+            },
+            {
+                "salon": "101",
+                "sede": "CAMPUS",
+                "codigo": "CAM-O-101-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio O"
+            },
+            {
+                "codigo": "CAM-O-102-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio O",
+                "salon": "102",
+                "sede": "CAMPUS"
+            },
+            {
+                "codigo": "CAM-O-102-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio O",
+                "salon": "102",
+                "sede": "CAMPUS"
+            },
+            {
+                "salon": "201",
+                "sede": "CAMPUS",
+                "codigo": "CAM-O-201-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio O"
+            },
+            {
+                "descripcion": "Video Beam",
+                "edificio": "Edificio O",
+                "salon": "201",
+                "sede": "CAMPUS",
+                "codigo": "CAM-O-201-VB01"
+            },
+            {
+                "codigo": "CAM-O-202-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio O",
+                "salon": "202",
+                "sede": "CAMPUS"
+            },
+            {
+                "codigo": "CAM-O-202-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio O",
+                "salon": "202",
+                "sede": "CAMPUS"
+            },
+            {
+                "salon": "301",
+                "sede": "CAMPUS",
+                "codigo": "CAM-O-301-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Edificio O"
+            },
+            {
+                "codigo": "CAM-O-301-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Edificio O",
+                "salon": "301",
+                "sede": "CAMPUS"
+            },
+            {
+                "salon": "101",
+                "sede": "NORTE",
+                "codigo": "NOR-BA-101-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Bloque A"
+            },
+            {
+                "codigo": "NOR-BA-101-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque A",
+                "salon": "101",
+                "sede": "NORTE"
+            },
+            {
+                "codigo": "NOR-BA-102-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Bloque A",
+                "salon": "102",
+                "sede": "NORTE"
+            },
+            {
+                "sede": "NORTE",
+                "codigo": "NOR-BA-102-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque A",
+                "salon": "102"
+            },
+            {
+                "codigo": "NOR-BA-201-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Bloque A",
+                "salon": "201",
+                "sede": "NORTE"
+            },
+            {
+                "sede": "NORTE",
+                "codigo": "NOR-BA-201-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque A",
+                "salon": "201"
+            },
+            {
+                "sede": "NORTE",
+                "codigo": "NOR-BA-202-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Bloque A",
+                "salon": "202"
+            },
+            {
+                "codigo": "NOR-BA-202-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque A",
+                "salon": "202",
+                "sede": "NORTE"
+            },
+            {
+                "edificio": "Bloque A",
+                "salon": "301",
+                "sede": "NORTE",
+                "codigo": "NOR-BA-301-PC01",
+                "descripcion": "PC de salón"
+            },
+            {
+                "sede": "NORTE",
+                "codigo": "NOR-BA-301-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque A",
+                "salon": "301"
+            },
+            {
+                "salon": "101",
+                "sede": "NORTE",
+                "codigo": "NOR-BB-101-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Bloque B"
+            },
+            {
+                "codigo": "NOR-BB-101-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque B",
+                "salon": "101",
+                "sede": "NORTE"
+            },
+            {
+                "sede": "NORTE",
+                "codigo": "NOR-BB-102-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Bloque B",
+                "salon": "102"
+            },
+            {
+                "salon": "102",
+                "sede": "NORTE",
+                "codigo": "NOR-BB-102-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque B"
+            },
+            {
+                "edificio": "Bloque B",
+                "salon": "201",
+                "sede": "NORTE",
+                "codigo": "NOR-BB-201-PC01",
+                "descripcion": "PC de salón"
+            },
+            {
+                "codigo": "NOR-BB-201-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque B",
+                "salon": "201",
+                "sede": "NORTE"
+            },
+            {
+                "codigo": "NOR-BB-202-PC01",
+                "descripcion": "PC de salón",
+                "edificio": "Bloque B",
+                "salon": "202",
+                "sede": "NORTE"
+            },
+            {
+                "edificio": "Bloque B",
+                "salon": "202",
+                "sede": "NORTE",
+                "codigo": "NOR-BB-202-VB01",
+                "descripcion": "Video Beam"
+            },
+            {
+                "descripcion": "PC de salón",
+                "edificio": "Bloque B",
+                "salon": "301",
+                "sede": "NORTE",
+                "codigo": "NOR-BB-301-PC01"
+            },
+            {
+                "codigo": "NOR-BB-301-VB01",
+                "descripcion": "Video Beam",
+                "edificio": "Bloque B",
+                "salon": "301",
+                "sede": "NORTE"
+            }
+        ],
+        "tokens": {
+            "tecnicos": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoibGF1cmEiLCJub21icmUiOiJMYXVyYSBNYXJ0w61uZXoiLCJyb2wiOiJURUNOSUNPIiwic2VkZSI6IkNBTVBVUyIsInRlY25pY29JZCI6IlQtTEFVUkEiLCJjb3JyZW8iOiJsYXVyYS5zb3BvcnRlQHVuaXNhYmFuYS5lZHUuY28iLCJpYXQiOjE3OTAyMjQxOTQsImV4cCI6MTc5MDI1Mjk5NH0.bu3uVylt2e-LbwhFSlZSOTSgpiMI0kkZf6PlKr3-zQg",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoibWlndWVsIiwibm9tYnJlIjoiTWlndWVsIFJvZHLDrWd1ZXoiLCJyb2wiOiJURUNOSUNPIiwic2VkZSI6IkNBTVBVUyIsInRlY25pY29JZCI6IlQtTUlHVUVMIiwiY29ycmVvIjoibWlndWVsLnNvcG9ydGVAdW5pc2FiYW5hLmVkdS5jbyIsImlhdCI6MTc5MDIyNDE5NCwiZXhwIjoxNzkwMjUyOTk0fQ.z5lANEYeTdXzM9wk6hDlq6eLUGFUbumG3CfQ-vnQyyM",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoic29maWEiLCJub21icmUiOiJTb2bDrWEgR8OzbWV6Iiwicm9sIjoiVEVDTklDTyIsInNlZGUiOiJDQU1QVVMiLCJ0ZWNuaWNvSWQiOiJULVNPRklBIiwiY29ycmVvIjoic29maWEuc29wb3J0ZUB1bmlzYWJhbmEuZWR1LmNvIiwiaWF0IjoxNzkwMjI0MTk0LCJleHAiOjE3OTAyNTI5OTR9.UB01I-fb7NzAWVnBqS3J5zFxG4qfYxMVDhE27lOu1u8",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiYW5kcmVzIiwibm9tYnJlIjoiQW5kcsOpcyBQYXJkbyIsInJvbCI6IlRFQ05JQ08iLCJzZWRlIjoiTk9SVEUiLCJ0ZWNuaWNvSWQiOiJULUFORFJFUyIsImNvcnJlbyI6ImFuZHJlcy5zb3BvcnRlQHVuaXNhYmFuYS5lZHUuY28iLCJpYXQiOjE3OTAyMjQxOTQsImV4cCI6MTc5MDI1Mjk5NH0.DGiRf8FKf8c6z7tHsmGy5Rl4Wq9Xv0V4zxDQk2B_O3I"
+            ],
+            "admin": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiYWRtaW4iLCJub21icmUiOiJDb29yZGluYWNpw7NuIGRlIHNvcG9ydGUiLCJyb2wiOiJBRE1JTiIsInNlZGUiOm51bGwsInRlY25pY29JZCI6bnVsbCwiY29ycmVvIjoic29wb3J0ZUB1bmlzYWJhbmEuZWR1LmNvIiwiaWF0IjoxNzkwMjI0MTk0LCJleHAiOjE3OTAyNTI5OTR9.1M4FKDEO7e6LesCf7zp5IbK0z52HCROOA6hVuaTsRvs",
+            "docente": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiZG9jZW50ZSIsIm5vbWJyZSI6IkFteSBKZWFuaW5lIiwicm9sIjoiRE9DRU5URSIsInNlZGUiOiJDQU1QVVMiLCJ0ZWNuaWNvSWQiOm51bGwsImNvcnJlbyI6ImFteS5qZWFuaW5lQHVuaXNhYmFuYS5lZHUuY28iLCJpYXQiOjE3OTAyMjQxOTQsImV4cCI6MTc5MDI1Mjk5NH0.0ljeaqOl-45emI1b8GFdJ0JrLTagK3Y7iJoCKb8PQGQ",
+            "docenteNorte": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiZG9jZW50ZS5ub3J0ZSIsIm5vbWJyZSI6IlByb2YuIERlbW8gTm9ydGUiLCJyb2wiOiJET0NFTlRFIiwic2VkZSI6Ik5PUlRFIiwidGVjbmljb0lkIjpudWxsLCJjb3JyZW8iOiJkb2NlbnRlLm5vcnRlQHVuaXNhYmFuYS5lZHUuY28iLCJpYXQiOjE3OTAyMjQxOTQsImV4cCI6MTc5MDI1Mjk5NH0.eJ4mvqtTUPC1TFqgJlSamzLxD5bGFggUHNOZw_WwEBk"
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "login 200": {
+                            "name": "login 200",
+                            "path": "::setup::login 200",
+                            "id": "647055af8ffe21e58084ae4b140cdda0",
+                            "passes": 7,
+                            "fails": 0
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "demanda 200": {
+                "name": "demanda 200",
+                "path": "::demanda 200",
+                "id": "c66b1afe737d297be1731bf22cd642d5",
+                "passes": 731,
+                "fails": 56
+            },
+            "cola 200": {
+                "fails": 247,
+                "name": "cola 200",
+                "path": "::cola 200",
+                "id": "67c64ea5178706b0d2d3f5998e90442e",
+                "passes": 3074
+            },
+            "crear 201": {
+                "name": "crear 201",
+                "path": "::crear 201",
+                "id": "65182993ebd0235f18006a8e5067c26a",
+                "passes": 6392,
+                "fails": 481
+            }
+        }
+    },
+    "metrics": {
+        "http_req_duration": {
+            "p(99)": 60000.860323,
+            "max": 60009.290513,
+            "avg": 4470.135915435265,
+            "med": 1584.482737,
+            "p(90)": 3833.902632,
+            "p(95)": 20465.014964
+        },
+        "http_req_duration{expected_response:true}": {
+            "max": 57843.915711,
+            "avg": 1900.3114908912216,
+            "med": 1550.651635,
+            "p(90)": 3683.9785832,
+            "p(95)": 3882.426678799999,
+            "p(99)": 19399.225582479998
+        },
+        "vus_max": {
+            "value": 704,
+            "min": 154,
+            "max": 704
+        },
+        "iteration_duration": {
+            "avg": 5603.3995426259,
+            "med": 1704.598233,
+            "p(90)": 4045.1891206,
+            "p(95)": 39781.33332659996,
+            "p(99)": 60001.361523800006,
+            "max": 60010.277951
+        },
+        "http_req_duration{nombre:consultar_cola}": {
+            "avg": 5223.444086367056,
+            "med": 1380.641139,
+            "p(90)": 4032.264489,
+            "p(95)": 59999.910923,
+            "p(99)": 60000.918189,
+            "max": 60009.290513,
+            "thresholds": {
+                "p(95)<300": true
+            }
+        },
+        "http_req_waiting": {
+            "avg": 4470.034839833999,
+            "med": 1584.339282,
+            "p(90)": 3833.809814,
+            "p(95)": 20464.784387,
+            "p(99)": 60000.815146,
+            "max": 60009.217275
+        },
+        "checks": {
+            "passes": 10204,
+            "fails": 784,
+            "value": 0.9286494357480888
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "med": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "p(99)": 0,
+            "max": 0
+        },
+        "http_req_failed": {
+            "passes": 784,
+            "fails": 10517,
+            "thresholds": {
+                "rate<0.01": true
+            },
+            "value": 0.06937439164675692
+        },
+        "http_reqs": {
+            "count": 11301,
+            "rate": 75.17147056440311
+        },
+        "http_req_duration{nombre:crear_solicitud}": {
+            "med": 1680.893552,
+            "p(90)": 3803.9306764000003,
+            "p(95)": 17933.9749326,
+            "p(99)": 60000.85440032,
+            "max": 60006.930868,
+            "avg": 4181.531189238042,
+            "thresholds": {
+                "p(95)<500": true
+            }
+        },
+        "http_req_blocked": {
+            "max": 19591.258711,
+            "avg": 282.8407887840014,
+            "med": 0.004548,
+            "p(90)": 0.023947,
+            "p(95)": 0.166264,
+            "p(99)": 19357.421936
+        },
+        "data_received": {
+            "rate": 506140.15411632945,
+            "count": 76091233
+        },
+        "vus": {
+            "value": 41,
+            "min": 4,
+            "max": 704
+        },
+        "dropped_iterations": {
+            "count": 17634,
+            "rate": 117.2970278676829
+        },
+        "http_req_sending": {
+            "p(90)": 0.042786,
+            "p(95)": 0.057771,
+            "p(99)": 0.234756,
+            "max": 6.759534,
+            "avg": 0.032828386072028995,
+            "med": 0.01697
+        },
+        "http_req_connecting": {
+            "avg": 282.8294419087692,
+            "med": 0,
+            "p(90)": 0,
+            "p(95)": 0.110168,
+            "p(99)": 19357.382243,
+            "max": 19591.197136
+        },
+        "iterations": {
+            "count": 11085,
+            "rate": 73.73469172696296
+        },
+        "http_req_receiving": {
+            "med": 0.051908,
+            "p(90)": 0.116221,
+            "p(95)": 0.162531,
+            "p(99)": 0.33408,
+            "max": 5.479364,
+            "avg": 0.06824721520219464
+        },
+        "data_sent": {
+            "count": 5901537,
+            "rate": 39255.57162023147
+        }
+    }
+}

@@ -1,0 +1,26 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: /home/claude/st2/perf/scripts/estres.js
+        output: csv (/home/claude/st2/perf/resultados/estres.csv)
+
+     scenarios: (100.00%) 3 scenarios, 704 max VUs, 2m30s max duration (incl. graceful stop):
+              * docentes: Up to 300.00 iterations/s for 2m0s over 3 stages (maxVUs: 100-400, exec: docentes, gracefulStop: 30s)
+              * pantallas: 50.00 iterations/s for 2m0s (maxVUs: 50-300, exec: pantallas, gracefulStop: 30s)
+              * tecnicos: 4 looping VUs for 2m0s (exec: tecnicos, gracefulStop: 30s)
+
+
+running (0m00.9s), 004/154 VUs, 30 complete and 0 interrupted iterations
+docentes    [   0% ] 000/100 VUs  0m00.5s/2m0s  011.53 iters/s
+pantallas   [   0% ] 000/050 VUs  0m00.5s/2m0s  50.00 iters/s
+tecnicos    [   0% ] 4 VUs        0m00.5s/2m0s 
+
+running (0m01.9s), 005/154 VUs, 93 complete and 0 interrupted iterations
+docentes    [   1% ] 000/100 VUs  0m01.5s/2m0s  014.53 iters/s
+pantallas   [   1% ] 001/050 VUs  0m01.5s/2m0s  50.00 iters/s
+tecnicos    [   1% ] 4 VUs        0m01.5s/2m0s 

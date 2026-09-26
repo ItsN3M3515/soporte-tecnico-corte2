@@ -1,0 +1,875 @@
+[
+ {
+  "filePath": "eslint.config.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "scripts/generarQR.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/in/http/app.js",
+  "messages": [],
+  "suppressedMessages": [
+   {
+    "ruleId": "no-unused-vars",
+    "severity": 2,
+    "message": "'next' is defined but never used. Allowed unused args must match /^_/u.",
+    "line": 94,
+    "column": 27,
+    "messageId": "unusedVar",
+    "endLine": 94,
+    "endColumn": 31,
+    "suggestions": [
+     {
+      "messageId": "removeVar",
+      "data": {
+       "varName": "next"
+      },
+      "fix": {
+       "range": [
+        4130,
+        4136
+       ],
+       "text": ""
+      },
+      "desc": "Remove unused variable 'next'."
+     }
+    ],
+    "suppressions": [
+     {
+      "kind": "directive",
+      "justification": ""
+     }
+    ]
+   }
+  ],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/in/realtime/servidorSockets.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/in/scheduler/ProgramadorEscalacion.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/out/persistence/sqlite/baseDatos.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/out/persistence/sqlite/repositorios.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/out/realtime/PublicadorSocketIO.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/out/reloj/RelojSistema.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/adapters/out/seguridad/CredencialesJWT.js",
+  "messages": [
+   {
+    "ruleId": "no-unused-vars",
+    "severity": 2,
+    "message": "'iat' is assigned a value but never used. Allowed unused vars must match /^_/u.",
+    "line": 36,
+    "column": 15,
+    "messageId": "unusedVar",
+    "endLine": 36,
+    "endColumn": 18,
+    "suggestions": [
+     {
+      "messageId": "removeVar",
+      "data": {
+       "varName": "iat"
+      },
+      "fix": {
+       "range": [
+        1159,
+        1163
+       ],
+       "text": ""
+      },
+      "desc": "Remove unused variable 'iat'."
+     }
+    ]
+   },
+   {
+    "ruleId": "no-unused-vars",
+    "severity": 2,
+    "message": "'exp' is assigned a value but never used. Allowed unused vars must match /^_/u.",
+    "line": 36,
+    "column": 20,
+    "messageId": "unusedVar",
+    "endLine": 36,
+    "endColumn": 23,
+    "suggestions": [
+     {
+      "messageId": "removeVar",
+      "data": {
+       "varName": "exp"
+      },
+      "fix": {
+       "range": [
+        1162,
+        1167
+       ],
+       "text": ""
+      },
+      "desc": "Remove unused variable 'exp'."
+     }
+    ]
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 2,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/application/AtenderSolicitud.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/application/Autenticar.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/application/Consultas.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/application/CrearSolicitudDesdeQR.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/application/EscalarVencidas.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/application/vistas.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/config/contenedor.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/config/datosIniciales.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/asignacion/GestorAsignaciones.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/busqueda/busqueda.js",
+  "messages": [
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 25,
+    "column": 12,
+    "endLine": 25,
+    "endColumn": 35
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 1,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/errores.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/escalacion/cadena.js",
+  "messages": [],
+  "suppressedMessages": [
+   {
+    "ruleId": "no-unused-vars",
+    "severity": 2,
+    "message": "'contexto' is defined but never used. Allowed unused args must match /^_/u.",
+    "line": 22,
+    "column": 11,
+    "messageId": "unusedVar",
+    "endLine": 22,
+    "endColumn": 19,
+    "suggestions": [
+     {
+      "messageId": "removeVar",
+      "data": {
+       "varName": "contexto"
+      },
+      "fix": {
+       "range": [
+        574,
+        582
+       ],
+       "text": ""
+      },
+      "desc": "Remove unused variable 'contexto'."
+     }
+    ],
+    "suppressions": [
+     {
+      "kind": "directive",
+      "justification": ""
+     }
+    ]
+   }
+  ],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/modelo/CodigoQR.js",
+  "messages": [
+   {
+    "ruleId": "security/detect-unsafe-regex",
+    "severity": 1,
+    "message": "Unsafe Regular Expression",
+    "line": 17,
+    "column": 23,
+    "endLine": 17,
+    "endColumn": 49
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 1,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/modelo/FabricaSolicitudes.js",
+  "messages": [
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Function Call Object Injection Sink",
+    "line": 54,
+    "column": 12,
+    "endLine": 54,
+    "endColumn": 27
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 1,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/modelo/Solicitud.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/modelo/enums.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/prioridad/ColaPrioridad.js",
+  "messages": [
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Function Call Object Injection Sink",
+    "line": 77,
+    "column": 26,
+    "endLine": 77,
+    "endColumn": 43
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Function Call Object Injection Sink",
+    "line": 77,
+    "column": 45,
+    "endLine": 77,
+    "endColumn": 66
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 78,
+    "column": 8,
+    "endLine": 78,
+    "endColumn": 25
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 78,
+    "column": 27,
+    "endLine": 78,
+    "endColumn": 48
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 78,
+    "column": 53,
+    "endLine": 78,
+    "endColumn": 74
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 78,
+    "column": 76,
+    "endLine": 78,
+    "endColumn": 93
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Function Call Object Injection Sink",
+    "line": 89,
+    "column": 36,
+    "endLine": 89,
+    "endColumn": 55
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Function Call Object Injection Sink",
+    "line": 89,
+    "column": 57,
+    "endLine": 89,
+    "endColumn": 78
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Function Call Object Injection Sink",
+    "line": 90,
+    "column": 36,
+    "endLine": 90,
+    "endColumn": 55
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Function Call Object Injection Sink",
+    "line": 90,
+    "column": 57,
+    "endLine": 90,
+    "endColumn": 78
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 92,
+    "column": 8,
+    "endLine": 92,
+    "endColumn": 25
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 92,
+    "column": 27,
+    "endLine": 92,
+    "endColumn": 48
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 92,
+    "column": 53,
+    "endLine": 92,
+    "endColumn": 74
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 92,
+    "column": 76,
+    "endLine": 92,
+    "endColumn": 93
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 14,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/prioridad/politicas.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/tecnicos/Tecnico.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/domain/tecnicos/estados.js",
+  "messages": [
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Variable Assigned to Object Injection Sink",
+    "line": 108,
+    "column": 17,
+    "endLine": 108,
+    "endColumn": 32
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 1,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/ports/puertos.js",
+  "messages": [
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 60,
+    "column": 21,
+    "endLine": 60,
+    "endColumn": 42
+   },
+   {
+    "ruleId": "security/detect-object-injection",
+    "severity": 1,
+    "message": "Generic Object Injection Sink",
+    "line": 60,
+    "column": 64,
+    "endLine": 60,
+    "endColumn": 78
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 2,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "src/server.js",
+  "messages": [
+   {
+    "ruleId": "security/detect-non-literal-fs-filename",
+    "severity": 1,
+    "message": "Found mkdirSync from package \"node:fs\" with non literal argument at index 0",
+    "line": 13,
+    "column": 28,
+    "endLine": 13,
+    "endColumn": 83
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 1,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/dobles/fakes.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/integration/api.int.test.js",
+  "messages": [
+   {
+    "ruleId": "jest/expect-expect",
+    "severity": 1,
+    "message": "Test has no assertions",
+    "line": 15,
+    "column": 5,
+    "messageId": "noAssertions",
+    "endLine": 15,
+    "endColumn": 9
+   },
+   {
+    "ruleId": "jest/expect-expect",
+    "severity": 1,
+    "message": "Test has no assertions",
+    "line": 20,
+    "column": 5,
+    "messageId": "noAssertions",
+    "endLine": 20,
+    "endColumn": 9
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 2,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/integration/entorno.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/integration/flujoSistema.e2e.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/integration/persistencia.int.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/integration/tiempoReal.int.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/unit/aplicacion/CasosDeUso.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/unit/arquitectura.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/unit/dominio/Asignacion.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/unit/dominio/CodigoQR.test.js",
+  "messages": [
+   {
+    "ruleId": "jest/no-conditional-expect",
+    "severity": 2,
+    "message": "Avoid calling `expect` conditionally`",
+    "line": 77,
+    "column": 9,
+    "messageId": "conditionalExpect",
+    "endLine": 77,
+    "endColumn": 79
+   },
+   {
+    "ruleId": "jest/no-conditional-expect",
+    "severity": 2,
+    "message": "Avoid calling `expect` conditionally`",
+    "line": 79,
+    "column": 9,
+    "messageId": "conditionalExpect",
+    "endLine": 79,
+    "endColumn": 77
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 2,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/unit/dominio/FabricaSolicitudes.test.js",
+  "messages": [
+   {
+    "ruleId": "jest/no-conditional-expect",
+    "severity": 2,
+    "message": "Avoid calling `expect` conditionally`",
+    "line": 50,
+    "column": 17,
+    "messageId": "conditionalExpect",
+    "endLine": 50,
+    "endColumn": 60
+   },
+   {
+    "ruleId": "jest/no-conditional-expect",
+    "severity": 2,
+    "message": "Avoid calling `expect` conditionally`",
+    "line": 51,
+    "column": 10,
+    "messageId": "conditionalExpect",
+    "endLine": 51,
+    "endColumn": 45
+   }
+  ],
+  "suppressedMessages": [],
+  "errorCount": 2,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/unit/dominio/Prioridad.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ },
+ {
+  "filePath": "tests/unit/dominio/Tecnico.test.js",
+  "messages": [],
+  "suppressedMessages": [],
+  "errorCount": 0,
+  "fatalErrorCount": 0,
+  "warningCount": 0,
+  "fixableErrorCount": 0,
+  "fixableWarningCount": 0,
+  "usedDeprecatedRules": []
+ }
+]

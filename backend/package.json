@@ -1,0 +1,65 @@
+{
+  "name": "soporte-tecnico-backend",
+  "version": "1.0.0",
+  "description": "API del sistema de solicitud de soporte técnico para aulas (Corte 2, arquitectura hexagonal)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning src/server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch src/server.js",
+    "test": "node --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js",
+    "test:unit": "node --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js tests/unit",
+    "test:integration": "node --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js tests/integration",
+    "test:coverage": "node --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --coverage",
+    "qr": "node scripts/generarQR.js",
+    "lint": "eslint .",
+    "escaneo": "eslint . && node scripts/reporteEscaneo.js",
+    "test:reporte": "node --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --config jest.reporte.config.js --coverage",
+    "evidencia": "node scripts/generarEvidencia.js",
+    "retos": "node scripts/retos.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.3",
+    "jsonwebtoken": "^9.0.3",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "eslint-plugin-jest": "^29.16.6",
+    "eslint-plugin-security": "^4.0.1",
+    "globals": "^17.12.0",
+    "jest": "^30.5.2",
+    "jest-html-reporters": "^3.1.7",
+    "jsqr": "^1.4.0",
+    "pngjs": "^7.0.0",
+    "socket.io-client": "^4.8.3",
+    "supertest": "^7.3.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/domain/**/*.js",
+      "src/application/**/*.js"
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "html",
+      "json-summary",
+      "lcov"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 85,
+        "branches": 75
+      }
+    }
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

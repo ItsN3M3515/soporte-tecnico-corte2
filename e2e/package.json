@@ -1,0 +1,14 @@
+{
+  "name": "soporte-tecnico-e2e",
+  "private": true,
+  "description": "Pruebas de sistema en el navegador (Playwright + Page Object Model) de la app AsisTec",
+  "scripts": {
+    "preparar": "node preparar.js",
+    "test": "playwright test",
+    "reporte": "playwright show-report reporte"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.0",
+    "pngjs": "^7.0.0"
+  }
+}
