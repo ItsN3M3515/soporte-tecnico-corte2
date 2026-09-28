@@ -10,6 +10,8 @@ Diseño y Arquitectura de Software (DYAS) · Universidad de La Sabana
 | Amy Jeanine Nossa Ramírez |
 | Simón Martínez García |
 
+
+https://canva.link/asistec-corte-2
 ---
 
 ## El problema (en una línea)
