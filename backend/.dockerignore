@@ -1,0 +1,16 @@
+node_modules/
+data/
+tests/
+coverage/
+scripts/
+.git/
+.github/
+.idea/
+.vscode/
+*.md
+.env
+.env.*
+Dockerfile
+.dockerignore
+eslint.config.js
+jest*.config.js

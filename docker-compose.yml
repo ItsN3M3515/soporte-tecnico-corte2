@@ -1,0 +1,26 @@
+name: asistec
+
+# Levanta el backend de AsisTec con su base de datos (SQLite en un volumen).
+# Uso:  cp .env.example .env   y despues   docker compose up -d --build
+# La app Expo corre aparte (cd app && npx expo start) y apunta a http://localhost:3000
+
+services:
+  backend:
+    build: ./backend
+    image: asistec-backend:dev
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      DB_PATH: /data/soporte.db
+      # Obligatoria: sin ella Compose se detiene en lugar de arrancar con un secreto vacio
+      JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET (ver .env.example)}
+      MINUTOS_SIN_RESPUESTA: ${MINUTOS_SIN_RESPUESTA:-5}
+      MINUTOS_EN_COLA: ${MINUTOS_EN_COLA:-10}
+      INTERVALO_ESCALACION_MS: ${INTERVALO_ESCALACION_MS:-30000}
+    volumes:
+      - datos-soporte:/data
+    restart: unless-stopped
+
+volumes:
+  datos-soporte:
